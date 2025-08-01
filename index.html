@@ -13,23 +13,33 @@
       font-family: 'Outfit', sans-serif;
       background: radial-gradient(ellipse at bottom, #0d0f23 0%, #000000 100%);
       color: white;
-      overflow: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
-    .container {
+    body::before {
+      content: "";
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .container, .viewer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
-      padding: 40px 20px 20px 20px;
+      padding: 40px 20px;
       text-align: center;
       z-index: 1;
-      overflow-y: auto;
-      box-sizing: border-box;
     }
 
     .title {
@@ -42,7 +52,7 @@
       margin-bottom: 20px;
     }
 
-    .planet-info {
+    .planet-info, .facts {
       font-size: 17px;
       max-width: 700px;
       line-height: 1.6;
@@ -52,7 +62,14 @@
       border-radius: 20px;
       backdrop-filter: blur(10px);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
-      margin-top: 10px;
+      margin: 20px 0;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
     }
 
     .bubble-button {
@@ -66,7 +83,7 @@
       cursor: pointer;
       box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
       transition: transform 0.2s;
-      margin-top: 30px;
+      margin: 30px 0;
     }
 
     .bubble-button:hover {
@@ -77,7 +94,6 @@
       font-size: 14px;
       color: #aaa;
       margin-top: 40px;
-      margin-bottom: 20px;
     }
 
     iframe {
@@ -91,6 +107,18 @@
       z-index: 2;
       flex-direction: column;
     }
+
+    .scroll-down {
+      animation: bounce 2s infinite;
+      margin-top: 10px;
+      font-size: 18px;
+      opacity: 0.7;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
   </style>
 </head>
 <body>
@@ -100,22 +128,42 @@
     <div class="title">🌍 Earth Science Project</div>
 
     <div class="planet-info">
-      <p><strong>Our Dream Planet</strong> is a green, vibrant, and healthy world more beautiful than Earth itself. With lush forests, pure oceans, and glowing natural rivers, it represents the best version of a habitable paradise in space.</p>
+      <p><strong>Our Dream Planet</strong> is a green, vibrant, and healthy world more beautiful than Earth itself. With lush forests, pure oceans, and glowing rivers, it represents the best version of a habitable paradise in space.</p>
+    </div>
+
+    <div class="scroll-down">⬇ Scroll Down</div>
+
+    <div class="facts">
+      <h3>🌎 Fun Facts About Our Dream Planet</h3>
+      <ol style="text-align: left;">
+        <li>🌿 70% covered in green forests and rich plant life</li>
+        <li>💧 25% fresh water oceans and crystal lakes</li>
+        <li>☁️ Clean atmosphere with 0% pollution</li>
+        <li>🦋 Home to 2,000+ peaceful animal species</li>
+        <li>💡 Powered 100% by renewable energy</li>
+        <li>📡 Advanced eco-friendly technology used</li>
+        <li>🌌 Orbiting twin stars giving beautiful sunrises</li>
+      </ol>
+    </div>
+
+    <div class="planet-info">
+      🌱 <strong>Did you know?</strong><br>
+      Our dream planet recycles all waste naturally! There's zero pollution!
     </div>
 
     <button class="bubble-button" onclick="showModel()">View 3D Planet</button>
 
     <div class="members">
       <strong>Group Members</strong><br />
-      Jesh Santeo Sabalboro<br />
-      Charize Opeña<br />
-      Rhona Mae Ogrimina<br />
-      Ruthella Gem Llames<br />
-      Joshua Orillosa<br />
-      Joel Palenzuela<br />
-      Zylan Joacauin Briones<br />
-      Myzel Sabdao<br />
-      <em>Made by J3s_hh</em>
+      🌟 Jesh Santeo Sabalboro<br />
+      🌠 Charize Opeña<br />
+      🪐 Rhona Mae Ogrimina<br />
+      🌌 Ruthella Gem Llames<br />
+      🌍 Joshua Orillosa<br />
+      🌑 Joel Palenzuela<br />
+      🌞 Zylan Joacauin Briones<br />
+      🌟 Myzel Sabdao<br />
+      <br />
     </div>
   </div>
 
