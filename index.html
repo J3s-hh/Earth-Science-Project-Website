@@ -16,7 +16,7 @@
       overflow: hidden;
     }
 
-    .container, .viewer {
+    .container {
       position: absolute;
       top: 0;
       left: 0;
@@ -24,12 +24,12 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: center;
       padding: 40px 20px 20px 20px;
       text-align: center;
-      transition: opacity 0.5s ease;
       z-index: 1;
+      overflow-y: auto;
+      box-sizing: border-box;
     }
 
     .title {
@@ -39,6 +39,7 @@
       background: linear-gradient(to right, #00eaff, #a1f4ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
     }
 
     .planet-info {
@@ -51,7 +52,7 @@
       border-radius: 20px;
       backdrop-filter: blur(10px);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     .bubble-button {
@@ -76,6 +77,7 @@
       font-size: 14px;
       color: #aaa;
       margin-top: 40px;
+      margin-bottom: 20px;
     }
 
     iframe {
@@ -98,7 +100,7 @@
     <div class="title">🌍 Earth Science Project</div>
 
     <div class="planet-info">
-      <p><strong> Our Dream Planet</strong> is a green, vibrant, and healthy world more beautiful than Earth itself. With lush forests, pure oceans, and glowing natural rivers, it represents the best version of a habitable paradise in space.</p>
+      <p><strong>Our Dream Planet</strong> is a green, vibrant, and healthy world more beautiful than Earth itself. With lush forests, pure oceans, and glowing natural rivers, it represents the best version of a habitable paradise in space.</p>
     </div>
 
     <button class="bubble-button" onclick="showModel()">View 3D Planet</button>
@@ -106,14 +108,14 @@
     <div class="members">
       <strong>Group Members</strong><br />
       Jesh Santeo Sabalboro<br />
-      Charize Opeña
-      Rhona Mae Ogrimina
-      Ruthella Gem Llames
-      Joshua Orillosa 
-      Joel Palenzuela 
-      Zylan Joacauin Briones
-      Myzel Sabdao
-      made by J3s_hh
+      Charize Opeña<br />
+      Rhona Mae Ogrimina<br />
+      Ruthella Gem Llames<br />
+      Joshua Orillosa<br />
+      Joel Palenzuela<br />
+      Zylan Joacauin Briones<br />
+      Myzel Sabdao<br />
+      <em>Made by J3s_hh</em>
     </div>
   </div>
 
