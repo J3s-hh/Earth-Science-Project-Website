@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Earth Science Project – Dream Planet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Outfit', sans-serif;
+      background: radial-gradient(ellipse at bottom, #0d0f23 0%, #000000 100%);
+      color: white;
+      overflow: hidden;
+    }
+
+    .container, .viewer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 20px 20px 20px;
+      text-align: center;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #00eaff, #a1f4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .planet-info {
+      font-size: 17px;
+      max-width: 700px;
+      line-height: 1.6;
+      color: #cccccc;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 18px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
+      margin-top: 20px;
+    }
+
+    .bubble-button {
+      background: linear-gradient(to right, #00ffc3, #00aaff);
+      color: #000;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+      transition: transform 0.2s;
+      margin-top: 30px;
+    }
+
+    .bubble-button:hover {
+      transform: scale(1.05);
+    }
+
+    .members {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 40px;
+    }
+
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .viewer {
+      display: none;
+      z-index: 2;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌍 Landing Page -->
+  <div class="container" id="landing">
+    <div class="title">🌍 Earth Science Project</div>
+
+    <div class="planet-info">
+      <p><strong> Our Dream Planet</strong> is a green, vibrant, and healthy world more beautiful than Earth itself. With lush forests, pure oceans, and glowing natural rivers, it represents the best version of a habitable paradise in space.</p>
+    </div>
+
+    <button class="bubble-button" onclick="showModel()">View 3D Planet</button>
+
+    <div class="members">
+      <strong>Group Members</strong><br />
+      Jesh Santeo Sabalboro<br />
+      [Add your other names here]
+    </div>
+  </div>
+
+  <!-- 🛰️ 3D Model Viewer -->
+  <div class="viewer" id="viewer">
+    <iframe
+      title="Dream Planet | School assignment"
+      src="https://sketchfab.com/models/961d17e3d9914af6be61646413ae38ad/embed?ui_theme=dark&autostart=1"
+      allow="autoplay; fullscreen; xr-spatial-tracking"
+      allowfullscreen
+      mozallowfullscreen="true"
+      webkitallowfullscreen="true"
+    ></iframe>
+  </div>
+
+  <script>
+    function showModel() {
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('viewer').style.display = 'flex';
+    }
+  </script>
+
+</body>
+</html>
