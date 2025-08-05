@@ -4,174 +4,887 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Earth Science Project – Dream Planet</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
       height: 100%;
       font-family: 'Outfit', sans-serif;
-      background: radial-gradient(ellipse at bottom, #0d0f23 0%, #000000 100%);
       color: white;
-      overflow-y: auto;
+      overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: url('https://www.transparenttextures.com/patterns/stardust.png');
-      opacity: 0.2;
-      z-index: 0;
+    /* Dynamic morphing background */
+    body {
+      background: linear-gradient(
+        to bottom,
+        #000011 0%,
+        #001122 20%,
+        #003366 40%,
+        #0066aa 60%,
+        #00aa99 80%,
+        #00cc66 100%
+      );
+      background-size: 100% 400%;
+      background-position: 0% 0%;
+      transition: background-position 0.3s ease;
     }
 
-    .container, .viewer {
-      position: absolute;
+    /* Animated starfield background */
+    .stars {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Mobile-first responsive design */
+    .container {
+      position: relative;
+      width: 100%;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      padding: 40px 20px;
+      padding: 20px 15px;
       text-align: center;
       z-index: 1;
     }
 
+    .header {
+      margin-bottom: 30px;
+      animation: fadeInDown 1s ease-out;
+    }
+
     .title {
-      font-size: 28px;
+      font-size: clamp(24px, 6vw, 32px);
       font-weight: 700;
       letter-spacing: 1px;
-      background: linear-gradient(to right, #00eaff, #a1f4ff);
+      background: linear-gradient(45deg, #00eaff, #a1f4ff, #00ffc3);
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .subtitle {
+      font-size: clamp(14px, 4vw, 18px);
+      color: #aaa;
+      font-weight: 300;
+    }
+
+    /* Enhanced cards with better mobile layout */
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      animation: slideInUp 0.8s ease-out;
+      animation-fill-mode: both;
+      cursor: pointer;
+    }
+
+    .card:hover, .card:active {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 255, 255, 0.2);
+    }
+
+    .card h3 {
+      font-size: clamp(18px, 5vw, 22px);
+      margin-bottom: 15px;
+      color: #00ffc3;
+    }
+
+    .card p, .card li {
+      font-size: clamp(14px, 4vw, 16px);
+      line-height: 1.6;
+      color: #cccccc;
+    }
+
+    /* Interactive Planet with Hotspots */
+    .planet-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+    }
+
+    .planet-preview {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #00ffc3, #00aaff, #0066cc);
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
+      animation: planetFloat 4s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .planet-preview:hover {
+      transform: scale(1.1);
+    }
+
+    .planet-preview::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: planetShine 3s linear infinite;
+    }
+
+    .hotspot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #00ffc3;
+      border-radius: 50%;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .hotspot:hover {
+      transform: scale(1.3);
+      background: #00ffc3;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 195, 0.7); }
+      50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 255, 195, 0); }
+    }
+
+    /* Popup for hotspot facts */
+    .fact-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border: 2px solid #00ffc3;
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 90vw;
+      max-height: 80vh;
+      z-index: 1000;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      color: white;
+      text-align: center;
+    }
+
+    .fact-popup.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .fact-popup h3 {
+      color: #00ffc3;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .fact-popup p {
+      font-size: 16px;
+      line-height: 1.6;
       margin-bottom: 20px;
     }
 
-    .planet-info, .facts {
-      font-size: 17px;
-      max-width: 700px;
-      line-height: 1.6;
-      color: #cccccc;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 18px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
-      margin: 20px 0;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0px); }
-    }
-
-    .bubble-button {
-      background: linear-gradient(to right, #00ffc3, #00aaff);
+    .close-popup {
+      background: #00ffc3;
       color: #000;
-      padding: 14px 28px;
-      font-size: 16px;
-      font-weight: bold;
       border: none;
-      border-radius: 40px;
+      padding: 10px 20px;
+      border-radius: 25px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
-      transition: transform 0.2s;
-      margin: 30px 0;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
-    .bubble-button:hover {
+    .close-popup:hover {
+      background: #00aaff;
+    }
+
+    /* Data Visualization Charts */
+    .chart-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 20px 0;
+    }
+
+    .chart-title {
+      text-align: center;
+      font-size: 18px;
+      color: #00ffc3;
+      margin-bottom: 15px;
+    }
+
+    .comparison-bar {
+      margin: 15px 0;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .bar-container {
+      width: 100%;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 12px;
+      transition: width 2s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .earth-bar { background: linear-gradient(90deg, #ff6b6b, #ff8e8e); }
+    .dream-bar { background: linear-gradient(90deg, #00ffc3, #00aaff); }
+
+    .bar-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Animated Counters */
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .counter-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .counter-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: #00ffc3;
+      display: block;
+    }
+
+    .counter-label {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+
+    /* Energy Flow Diagram */
+    .energy-flow {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      height: 200px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .energy-source {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      animation: energyPulse 2s infinite;
+    }
+
+    .solar { background: #ffeb3b; top: 20px; left: 20px; }
+    .wind { background: #2196f3; top: 20px; right: 20px; }
+    .hydro { background: #00bcd4; bottom: 60px; left: 20px; }
+    .geo { background: #ff5722; bottom: 60px; right: 20px; }
+
+    .energy-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #00ffc3, #00aaff);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      animation: centerGlow 2s infinite alternate;
+    }
+
+    .energy-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00ffc3, transparent);
+      animation: energyFlow 3s infinite;
+    }
+
+    @keyframes energyPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes centerGlow {
+      0% { box-shadow: 0 0 20px rgba(0, 255, 195, 0.5); }
+      100% { box-shadow: 0 0 40px rgba(0, 255, 195, 0.8); }
+    }
+
+    @keyframes energyFlow {
+      0% { opacity: 0; transform: translateX(-20px); }
+      50% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(20px); }
+    }
+
+    /* Health Meters */
+    .health-meters {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .health-meter {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .meter-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .air { background: #e3f2fd; color: #1976d2; }
+    .water { background: #e0f2f1; color: #00796b; }
+    .soil { background: #efebe9; color: #5d4037; }
+    .bio { background: #f3e5f5; color: #7b1fa2; }
+
+    .meter-content {
+      flex: 1;
+    }
+
+    .meter-label {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 5px;
+    }
+
+    .meter-bar {
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ffc3, #00aaff);
+      border-radius: 6px;
+      transition: width 2s ease-out;
+      animation: healthGlow 3s infinite alternate;
+    }
+
+    @keyframes healthGlow {
+      0% { box-shadow: 0 0 5px rgba(0, 255, 195, 0.3); }
+      100% { box-shadow: 0 0 15px rgba(0, 255, 195, 0.6); }
+    }
+
+    @keyframes planetFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    @keyframes planetShine {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Interactive button with ripple effect */
+    .planet-button {
+      position: relative;
+      background: linear-gradient(45deg, #00ffc3, #00aaff, #a1f4ff);
+      background-size: 200% 200%;
+      color: #000;
+      padding: 16px 32px;
+      font-size: clamp(16px, 4vw, 18px);
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 30px rgba(0, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      margin: 30px 0;
+      overflow: hidden;
+      animation: buttonGlow 2s ease-in-out infinite;
+    }
+
+    .planet-button:hover, .planet-button:active {
+      transform: translateY(-3px) scale(1.05);
+      background-position: 100% 0;
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Team members grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 600px;
+      margin: 20px 0;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      font-size: clamp(12px, 3.5vw, 14px);
+    }
+
+    .team-member:hover {
+      background: rgba(255, 255, 255, 0.1);
       transform: scale(1.05);
     }
 
-    .members {
-      font-size: 14px;
-      color: #aaa;
-      margin-top: 40px;
-    }
-
-    iframe {
-      border: none;
-      width: 100vw;
-      height: 100vh;
-    }
-
+    /* Viewer styles */
     .viewer {
       display: none;
-      z-index: 2;
-      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      background: #000;
     }
 
-    .scroll-down {
-      animation: bounce 2s infinite;
-      margin-top: 10px;
-      font-size: 18px;
-      opacity: 0.7;
+    .viewer iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: 2px solid #00ffc3;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: #00ffc3;
+      color: #000;
+    }
+
+    /* Loading animation */
+    .loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2000;
+      display: none;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #00ffc3;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Animation delays for staggered effect */
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+    .card:nth-child(7) { animation-delay: 0.7s; }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes buttonGlow {
+      0%, 100% { box-shadow: 0 6px 30px rgba(0, 255, 255, 0.3); }
+      50% { box-shadow: 0 8px 40px rgba(0, 255, 255, 0.5); }
+    }
+
+    /* Touch-friendly improvements */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px 10px;
+      }
+      
+      .card {
+        padding: 18px;
+        margin: 12px 0;
+      }
+      
+      .planet-button {
+        padding: 18px 36px;
+        font-size: 16px;
+        margin: 25px 0;
+      }
+      
+      .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+      }
+
+      .counter-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .energy-flow {
+        height: 150px;
+      }
+    }
+
+    /* Ultra small screens */
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px 8px;
+      }
+      
+      .team-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .planet-container {
+        width: 150px;
+        height: 150px;
+      }
+
+      .planet-preview {
+        width: 150px;
+        height: 150px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Animated starfield -->
+  <div class="stars" id="stars"></div>
 
-  <!-- 🌍 Landing Page -->
+  <!-- Loading animation -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Fact popup -->
+  <div class="fact-popup" id="factPopup">
+    <h3 id="factTitle"></h3>
+    <p id="factContent"></p>
+    <button class="close-popup" onclick="closeFactPopup()">Close</button>
+  </div>
+
+  <!-- Main content -->
   <div class="container" id="landing">
-    <div class="title">🌍 Earth Science Project</div>
-
-    <div class="planet-info">
-      <p><strong>Our Dream Planet</strong> is a green, vibrant, and healthy world more beautiful than Earth itself. With lush forests, pure oceans, and glowing rivers, it represents the best version of a habitable paradise in space.</p>
+    <div class="header">
+      <div class="title">🌍 Earth Science Project</div>
+      <div class="subtitle">Exploring Our Dream Planet</div>
     </div>
 
-    <div class="scroll-down">⬇ Scroll Down</div>
-
-    <div class="facts">
-      <h3>🌎 Fun Facts About Our Dream Planet</h3>
-      <ol style="text-align: left;">
-        <li>🌿 70% covered in green forests and rich plant life</li>
-        <li>💧 25% fresh water oceans and crystal lakes</li>
-        <li>☁️ Clean atmosphere with 0% pollution</li>
-        <li>🦋 Home to 2,000+ peaceful animal species</li>
-        <li>💡 Powered 100% by renewable energy</li>
-        <li>📡 Advanced eco-friendly technology used</li>
-        <li>🌌 Orbiting twin stars giving beautiful sunrises</li>
-      </ol>
+    <div class="card">
+      <div class="planet-container">
+        <div class="planet-preview">
+          <!-- Interactive hotspots -->
+          <div class="hotspot" style="top: 30%; left: 25%;" onclick="showFact('forests')"></div>
+          <div class="hotspot" style="top: 60%; left: 70%;" onclick="showFact('oceans')"></div>
+          <div class="hotspot" style="top: 45%; left: 50%;" onclick="showFact('energy')"></div>
+          <div class="hotspot" style="top: 20%; left: 80%;" onclick="showFact('atmosphere')"></div>
+          <div class="hotspot" style="bottom: 20%; left: 30%;" onclick="showFact('wildlife')"></div>
+        </div>
+      </div>
+      <h3>🪐 Interactive Dream Planet</h3>
+      <p>Tap the glowing hotspots on our planet to discover amazing features! Each point reveals incredible facts about our eco-paradise.</p>
     </div>
 
-    <div class="planet-info">
-      🌱 <strong>Did you know?</strong><br>
-      Our dream planet recycles all waste naturally! There's zero pollution!
+    <div class="card">
+      <h3>📊 Earth vs Dream Planet Comparison</h3>
+      <div class="chart-container">
+        <div class="comparison-bar">
+          <div class="bar-label">
+            <span>🌫️ Air Quality</span>
+            <span id="airValue">0%</span>
+          </div>
+          <div class="bar-container">
+            <div class="bar-fill earth-bar" style="width: 0%" id="earthAir"></div>
+          </div>
+          <div class="bar-container" style="margin-top: 5px;">
+            <div class="bar-fill dream-bar" style="width: 0%" id="dreamAir"></div>
+          </div>
+        </div>
+        
+        <div class="comparison-bar">
+          <div class="bar-label">
+            <span>💧 Water Purity</span>
+            <span id="waterValue">0%</span>
+          </div>
+          <div class="bar-container">
+            <div class="bar-fill earth-bar" style="width: 0%" id="earthWater"></div>
+          </div>
+          <div class="bar-container" style="margin-top: 5px;">
+            <div class="bar-fill dream-bar" style="width: 0%" id="dreamWater"></div>
+          </div>
+        </div>
+        
+        <div class="comparison-bar">
+          <div class="bar-label">
+            <span>🌱 Biodiversity</span>
+            <span id="bioValue">0%</span>
+          </div>
+          <div class="bar-container">
+            <div class="bar-fill earth-bar" style="width: 0%" id="earthBio"></div>
+          </div>
+          <div class="bar-container" style="margin-top: 5px;">
+            <div class="bar-fill dream-bar" style="width: 0%" id="dreamBio"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <button class="bubble-button" onclick="showModel()">View 3D Planet</button>
+    <div class="card">
+      <h3>🔢 Planet Statistics</h3>
+      <div class="counter-grid">
+        <div class="counter-item">
+          <span class="counter-number" data-target="2847">0</span>
+          <div class="counter-label">Species Count</div>
+        </div>
+        <div class="counter-item">
+          <span class="counter-number" data-target="100">0</span>
+          <div class="counter-label">Clean Energy %</div>
+        </div>
+        <div class="counter-item">
+          <span class="counter-number" data-target="0">0</span>
+          <div class="counter-label">Pollution Level</div>
+        </div>
+        <div class="counter-item">
+          <span class="counter-number" data-target="98">0</span>
+          <div class="counter-label">Happiness Index</div>
+        </div>
+      </div>
+    </div>
 
-    <div class="members">
-      <strong>Group Members</strong><br />
-      🌟 Jesh Santeo Sabalboro<br />
-      🌠 Charize Opeña<br />
-      🪐 Rhona Mae Ogrimina<br />
-      🌌 Ruthella Gem Llames<br />
-      🌍 Joshua Orillosa<br />
-      🌑 Joel Palenzuela<br />
-      🌞 Zylan Joacauin Briones<br />
-      🌟 Myzel Sabdao<br />
-      <br />
+    <div class="card">
+      <h3>⚡ Renewable Energy Flow</h3>
+      <div class="energy-flow">
+        <div class="energy-source solar">☀️</div>
+        <div class="energy-source wind">💨</div>
+        <div class="energy-source hydro">💧</div>
+        <div class="energy-source geo">🌋</div>
+        <div class="energy-center">🔋</div>
+        
+        <!-- Energy flow lines will be added by JavaScript -->
+      </div>
+      <p style="font-size: 14px; color: #aaa; margin-top: 10px;">
+        Our planet is powered by 100% renewable energy from multiple sources!
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>🏥 Ecosystem Health Meters</h3>
+      <div class="health-meters">
+        <div class="health-meter">
+          <div class="meter-icon air">🌬️</div>
+          <div class="meter-content">
+            <div class="meter-label">Air Quality</div>
+            <div class="meter-bar">
+              <div class="meter-fill" style="width: 0%" data-width="100%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="health-meter">
+          <div class="meter-icon water">💧</div>
+          <div class="meter-content">
+            <div class="meter-label">Water Purity</div>
+            <div class="meter-bar">
+              <div class="meter-fill" style="width: 0%" data-width="100%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="health-meter">
+          <div class="meter-icon soil">🌱</div>
+          <div class="meter-content">
+            <div class="meter-label">Soil Health</div>
+            <div class="meter-bar">
+              <div class="meter-fill" style="width: 0%" data-width="95%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="health-meter">
+          <div class="meter-icon bio">🦋</div>
+          <div class="meter-content">
+            <div class="meter-label">Biodiversity</div>
+            <div class="meter-bar">
+              <div class="meter-fill" style="width: 0%" data-width="98%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="planet-button" onclick="showModel(this)">
+      🚀 Explore 3D Planet
+    </button>
+
+    <div class="card">
+      <h3>👥 Project Team</h3>
+      <div class="team-grid">
+        <div class="team-member">🌟 Jesh Santeo Sabalboro</div>
+        <div class="team-member">🌠 Charize Opeña</div>
+        <div class="team-member">🪐 Rhona Mae Ogrimina</div>
+        <div class="team-member">🌌 Ruthella Gem Llames</div>
+        <div class="team-member">🌍 Joshua Orillosa</div>
+        <div class="team-member">🌑 Joel Palenzuela</div>
+        <div class="team-member">🌞 Zylan Joacauin Briones</div>
+        <div class="team-member">🌟 Myzel Sabdao</div>
+      </div>
     </div>
   </div>
 
-  <!-- 🛰️ 3D Model Viewer -->
+  <!-- 3D Model Viewer -->
   <div class="viewer" id="viewer">
+    <button class="back-button" onclick="hideModel()">← Back to Planet Info</button>
     <iframe
+      id="planetFrame"
       title="Dream Planet | School assignment"
-      src="https://sketchfab.com/models/961d17e3d9914af6be61646413ae38ad/embed?ui_theme=dark&autostart=1"
+      src=""
       allow="autoplay; fullscreen; xr-spatial-tracking"
       allowfullscreen
       mozallowfullscreen="true"
@@ -180,10 +893,338 @@
   </div>
 
   <script>
-    function showModel() {
-      document.getElementById('landing').style.display = 'none';
-      document.getElementById('viewer').style.display = 'flex';
+    // Sound effects using Web Audio API
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playSound(frequency, duration, type = 'sine') {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      oscillator.type = type;
+      
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
     }
+
+    // Hotspot facts data
+    const planetFacts = {
+      forests: {
+        title: "🌲 Magical Forests",
+        content: "Our dream planet's forests cover 70% of the land surface! These aren't ordinary trees - they glow softly at night, purify the air at 10x Earth's rate, and provide homes for over 1,500 unique species. The trees communicate through underground root networks, sharing nutrients and information!"
+      },
+      oceans: {
+        title: "🌊 Crystal Oceans",
+        content: "The oceans here are so pure you can see 200 meters deep! They're filled with bioluminescent creatures that create natural light shows every night. The water has healing properties and maintains perfect temperature year-round. Marine life includes gentle whale-like creatures that sing beautiful melodies!"
+      },
+      energy: {
+        title: "⚡ Energy Core",
+        content: "At the planet's core lies a massive renewable energy generator powered by geothermal, solar, wind, and tidal forces! This bio-engineered system produces unlimited clean energy and distributes it through living energy conduits that grow like vines across the planet's surface."
+      },
+      atmosphere: {
+        title: "☁️ Perfect Atmosphere",
+        content: "Our atmosphere contains 0% pollution and perfect oxygen levels! Floating island gardens drift through the sky, cleaning the air and creating stunning aurora displays. The sky changes colors based on the planet's mood, from gentle blues to vibrant purples and greens!"
+      },
+      wildlife: {
+        title: "🦋 Amazing Wildlife",
+        content: "Over 2,847 species call our planet home! From rainbow-colored birds that paint the sky to gentle giants that help maintain the ecosystem. All creatures live in perfect harmony - predation doesn't exist here. Instead, animals work together, with some species even helping others evolve and thrive!"
+      }
+    };
+
+    // Create animated starfield
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const numStars = window.innerWidth < 768 ? 50 : 100;
+      
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (2 + Math.random() * 2) + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Show fact popup with sound effect
+    function showFact(factType) {
+      playSound(800, 0.2, 'triangle'); // Pleasant chime sound
+      
+      const popup = document.getElementById('factPopup');
+      const title = document.getElementById('factTitle');
+      const content = document.getElementById('factContent');
+      
+      const fact = planetFacts[factType];
+      title.textContent = fact.title;
+      content.textContent = fact.content;
+      
+      popup.classList.add('show');
+    }
+
+    // Close fact popup with sound
+    function closeFactPopup() {
+      playSound(600, 0.1, 'sine');
+      document.getElementById('factPopup').classList.remove('show');
+    }
+
+    // Ripple effect with sound
+    function createRipple(event) {
+      playSound(1000, 0.1, 'triangle');
+      
+      const button = event.currentTarget;
+      const ripple = document.createElement('span');
+      const rect = button.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = event.clientX - rect.left - size / 2;
+      const y = event.clientY - rect.top - size / 2;
+      
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      button.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    }
+
+    // Animate counters
+    function animateCounters() {
+      const counters = document.querySelectorAll('.counter-number');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.floor(current);
+          }
+        }, 30);
+      });
+    }
+
+    // Animate comparison bars
+    function animateComparisonBars() {
+      // Earth data (poor performance)
+      const earthData = { air: 30, water: 45, bio: 60 };
+      // Dream planet data (excellent performance)
+      const dreamData = { air: 100, water: 100, bio: 98 };
+      
+      setTimeout(() => {
+        document.getElementById('earthAir').style.width = earthData.air + '%';
+        document.getElementById('earthWater').style.width = earthData.water + '%';
+        document.getElementById('earthBio').style.width = earthData.bio + '%';
+      }, 500);
+      
+      setTimeout(() => {
+        document.getElementById('dreamAir').style.width = dreamData.air + '%';
+        document.getElementById('dreamWater').style.width = dreamData.water + '%';
+        document.getElementById('dreamBio').style.width = dreamData.bio + '%';
+        
+        // Update value displays
+        document.getElementById('airValue').textContent = dreamData.air + '%';
+        document.getElementById('waterValue').textContent = dreamData.water + '%';
+        document.getElementById('bioValue').textContent = dreamData.bio + '%';
+      }, 1000);
+    }
+
+    // Animate health meters
+    function animateHealthMeters() {
+      const meters = document.querySelectorAll('.meter-fill');
+      
+      meters.forEach((meter, index) => {
+        setTimeout(() => {
+          const targetWidth = meter.getAttribute('data-width');
+          meter.style.width = targetWidth;
+        }, 300 * (index + 1));
+      });
+    }
+
+    // Create energy flow lines
+    function createEnergyFlow() {
+      const energyFlow = document.querySelector('.energy-flow');
+      const center = energyFlow.querySelector('.energy-center');
+      const sources = energyFlow.querySelectorAll('.energy-source');
+      
+      sources.forEach((source, index) => {
+        const line = document.createElement('div');
+        line.className = 'energy-line';
+        
+        // Calculate line position and rotation
+        const sourceRect = source.getBoundingClientRect();
+        const centerRect = center.getBoundingClientRect();
+        const energyRect = energyFlow.getBoundingClientRect();
+        
+        const sourceX = sourceRect.left + sourceRect.width/2 - energyRect.left;
+        const sourceY = sourceRect.top + sourceRect.height/2 - energyRect.top;
+        const centerX = centerRect.left + centerRect.width/2 - energyRect.left;
+        const centerY = centerRect.top + centerRect.height/2 - energyRect.top;
+        
+        const length = Math.sqrt(Math.pow(centerX - sourceX, 2) + Math.pow(centerY - sourceY, 2));
+        const angle = Math.atan2(centerY - sourceY, centerX - sourceX) * 180 / Math.PI;
+        
+        line.style.width = length + 'px';
+        line.style.left = sourceX + 'px';
+        line.style.top = sourceY + 'px';
+        line.style.transformOrigin = '0 50%';
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.animationDelay = (index * 0.5) + 's';
+        
+        energyFlow.appendChild(line);
+      });
+    }
+
+    // Morphing background based on scroll
+    function updateBackgroundOnScroll() {
+      const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      const backgroundPosition = scrollPercent * 100;
+      
+      document.body.style.backgroundPosition = `0% ${backgroundPosition}%`;
+      
+      // Fade out stars as we scroll down (entering atmosphere)
+      const stars = document.getElementById('stars');
+      const opacity = Math.max(0, 1 - (scrollPercent * 2));
+      stars.style.opacity = opacity;
+    }
+
+    // Show 3D model with enhanced effects
+    function showModel(button) {
+      createRipple(event);
+      playSound(1200, 0.3, 'sawtooth'); // Sci-fi launch sound
+      
+      // Show loading
+      document.getElementById('loading').style.display = 'block';
+      
+      // Hide landing page
+      setTimeout(() => {
+        document.getElementById('landing').style.display = 'none';
+        document.getElementById('viewer').style.display = 'flex';
+        
+        // Load iframe
+        const iframe = document.getElementById('planetFrame');
+        iframe.src = 'https://sketchfab.com/models/961d17e3d9914af6be61646413ae38ad/embed?ui_theme=dark&autostart=1';
+        
+        // Hide loading after iframe loads
+        iframe.onload = () => {
+          setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+          }, 1000);
+        };
+      }, 300);
+    }
+
+    // Hide 3D model and return to main page
+    function hideModel() {
+      playSound(600, 0.2, 'sine');
+      
+      document.getElementById('viewer').style.display = 'none';
+      document.getElementById('landing').style.display = 'flex';
+      
+      // Unload iframe to save memory
+      const iframe = document.getElementById('planetFrame');
+      iframe.src = '';
+    }
+
+    // Add card click sound effects
+    function addCardSounds() {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          playSound(400, 0.1, 'triangle');
+        });
+      });
+    }
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      createStars();
+      addCardSounds();
+      
+      // Start animations after a short delay
+      setTimeout(() => {
+        animateCounters();
+        animateComparisonBars();
+        animateHealthMeters();
+        createEnergyFlow();
+      }, 1000);
+      
+      // Add touch feedback to cards
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+          this.style.transform = 'scale(0.98)';
+        });
+        
+        card.addEventListener('touchend', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+
+      // Add ripple effect to button
+      const planetButton = document.querySelector('.planet-button');
+      planetButton.addEventListener('click', createRipple);
+      
+      // Add scroll listener for morphing background
+      window.addEventListener('scroll', updateBackgroundOnScroll);
+      
+      // Close popup when clicking outside
+      document.getElementById('factPopup').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeFactPopup();
+        }
+      });
+      
+      // Prevent zoom on double tap for better mobile experience
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+    });
+
+    // Handle orientation changes
+    window.addEventListener('orientationchange', function() {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        // Recreate energy flow lines after orientation change
+        const existingLines = document.querySelectorAll('.energy-line');
+        existingLines.forEach(line => line.remove());
+        setTimeout(createEnergyFlow, 500);
+      }, 500);
+    });
+
+    // Optimize performance on mobile
+    if (window.innerWidth < 768) {
+      document.documentElement.style.setProperty('--animation-duration', '2s');
+    }
+
+    // Add keyboard navigation for accessibility
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeFactPopup();
+        if (document.getElementById('viewer').style.display === 'flex') {
+          hideModel();
+        }
+      }
+    });
   </script>
 
 </body>
