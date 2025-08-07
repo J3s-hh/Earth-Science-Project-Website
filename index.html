@@ -714,7 +714,7 @@
   <div class="container" id="landing">
     <div class="header">
       <div class="title">🌍 Earth Science Project</div>
-      <div class="subtitle">Exploring Our Dream Planet</div>
+      <div class="subtitle">The Hidden Paradise Beneath</div>
     </div>
 
     <div class="card">
@@ -728,8 +728,8 @@
           <div class="hotspot" style="bottom: 20%; left: 30%;" onclick="showFact('wildlife')"></div>
         </div>
       </div>
-      <h3>🪐 Interactive Dream Planet</h3>
-      <p>Tap the glowing hotspots on our planet to discover amazing features! Each point reveals incredible facts about our eco-paradise.</p>
+      <h3>🪐 Don't Judge a Planet by Its Cover!</h3>
+      <p>This mysterious world may look barren and lifeless from space, but beneath its protective atmospheric shell lies the most incredible eco-paradise in the galaxy! Sometimes the most beautiful things are hidden from first glance.</p>
     </div>
 
     <div class="card">
@@ -780,8 +780,8 @@
       <h3>🔢 Planet Statistics</h3>
       <div class="counter-grid">
         <div class="counter-item">
-          <span class="counter-number" data-target="2847">0</span>
-          <div class="counter-label">Species Count</div>
+          <span class="counter-number" data-target="3247">0</span>
+          <div class="counter-label">Hidden Species</div>
         </div>
         <div class="counter-item">
           <span class="counter-number" data-target="100">0</span>
@@ -810,7 +810,7 @@
         <!-- Energy flow lines will be added by JavaScript -->
       </div>
       <p style="font-size: 14px; color: #aaa; margin-top: 10px;">
-        Our planet is powered by 100% renewable energy from multiple sources!
+        This planet's surface may look barren, but it's powered by the most advanced underground renewable energy network in the galaxy!
       </p>
     </div>
 
@@ -883,7 +883,7 @@
     <button class="back-button" onclick="hideModel()">← Back to Planet Info</button>
     <iframe
       id="planetFrame"
-      title="Dream Planet | School assignment"
+      title="Alien Planet | Dream Planet School Assignment"
       src=""
       allow="autoplay; fullscreen; xr-spatial-tracking"
       allowfullscreen
@@ -916,24 +916,24 @@
     // Hotspot facts data
     const planetFacts = {
       forests: {
-        title: "🌲 Magical Forests",
-        content: "Our dream planet's forests cover 70% of the land surface! These aren't ordinary trees - they glow softly at night, purify the air at 10x Earth's rate, and provide homes for over 1,500 unique species. The trees communicate through underground root networks, sharing nutrients and information!"
+        title: "🌲 Hidden Underground Forests",
+        content: "Beneath the planet's protective surface lies a vast network of underground forests! These bioluminescent trees grow in massive cavern systems, creating glowing forests that stretch for thousands of kilometers. The roots connect through crystal formations, sharing nutrients and creating the most efficient ecosystem ever discovered!"
       },
       oceans: {
-        title: "🌊 Crystal Oceans",
-        content: "The oceans here are so pure you can see 200 meters deep! They're filled with bioluminescent creatures that create natural light shows every night. The water has healing properties and maintains perfect temperature year-round. Marine life includes gentle whale-like creatures that sing beautiful melodies!"
+        title: "🌊 Subterranean Crystal Seas",
+        content: "Hidden beneath the rocky exterior are underground oceans made of liquid crystal! These aren't ordinary seas - they're filled with healing minerals and support incredible life forms that exist nowhere else. The crystal waters glow with their own inner light and maintain perfect conditions for life!"
       },
       energy: {
-        title: "⚡ Energy Core",
-        content: "At the planet's core lies a massive renewable energy generator powered by geothermal, solar, wind, and tidal forces! This bio-engineered system produces unlimited clean energy and distributes it through living energy conduits that grow like vines across the planet's surface."
+        title: "⚡ Planetary Core Generator",
+        content: "The planet's desolate appearance is actually its greatest strength! The surface acts as a massive solar collector and atmospheric processor, channeling unlimited energy to the thriving civilizations below. This camouflaged paradise produces 1000x more clean energy than any other known world!"
       },
       atmosphere: {
-        title: "☁️ Perfect Atmosphere",
-        content: "Our atmosphere contains 0% pollution and perfect oxygen levels! Floating island gardens drift through the sky, cleaning the air and creating stunning aurora displays. The sky changes colors based on the planet's mood, from gentle blues to vibrant purples and greens!"
+        title: "☁️ Protective Stealth Shield",
+        content: "What looks like a harsh, empty atmosphere is actually an advanced protective shield! This bio-engineered atmospheric layer filters out harmful radiation while maintaining perfect conditions below. It's nature's ultimate camouflage system - hiding paradise in plain sight!"
       },
       wildlife: {
-        title: "🦋 Amazing Wildlife",
-        content: "Over 2,847 species call our planet home! From rainbow-colored birds that paint the sky to gentle giants that help maintain the ecosystem. All creatures live in perfect harmony - predation doesn't exist here. Instead, animals work together, with some species even helping others evolve and thrive!"
+        title: "🦋 Secret Underground Ecosystem",
+        content: "Over 3,000 unique species thrive in the planet's hidden underground biomes! From crystal-winged creatures that navigate by light, to gentle giants that maintain the underground forests. This secret world proves that life finds the most incredible ways to flourish, even in the most unexpected places!"
       }
     };
 
@@ -1115,9 +1115,9 @@
         document.getElementById('landing').style.display = 'none';
         document.getElementById('viewer').style.display = 'flex';
         
-        // Load iframe
+        // Load iframe with new Alien Planet model
         const iframe = document.getElementById('planetFrame');
-        iframe.src = 'https://sketchfab.com/models/961d17e3d9914af6be61646413ae38ad/embed?ui_theme=dark&autostart=1';
+        iframe.src = 'https://sketchfab.com/models/bbb2e0eeb0b34247b8a70655c780fad5/embed?ui_theme=dark&autostart=1';
         
         // Hide loading after iframe loads
         iframe.onload = () => {
